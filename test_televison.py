@@ -1,71 +1,90 @@
-import unittest
+import pytest
 from television import Television
 
+class Test:
 
-class TestTelevision(unittest.TestCase):
-    def setUp(self):
-        self.tv = Television()
+    def setup_method(self):
+        self.tv = Television
 
-    def test_init(self):
-        self.assertIs((self.__str__()), 'Power = False, Channel = 0, Volume = 0')
+    def test_init():
+        assert self.tv.__str__() == 'Power = False, Channel = 0, Volume = 0'
 
-    def test_power(self):
-        self.assertTrue(self.tv.power())
-        self.assertFalse(self.tv.power())
-
-    def test_mute(self):
+    def test_power():
         self.tv.power()
-        self.assertTrue(self.tv.mute())
-        self.assertFalse(self.tv.mute())
-        self.tv.power()
-        self.assertTrue(self.tv.mute)
-        self.assertFalse(self.tv.mute())
+        assert self.tv.__status == True
+        tv.power()
+        assert self.tv.__status == False
 
-    def test_channel_up(self):
+    def test_mute():
         self.tv.power()
-        self.assertEqual(self.tv.channel_up(), 1)
-        self.assertEqual(self.tv.channel_up(), 2)
-        self.assertEqual(self.tv.channel_up(), 3)
-        self.assertEqual(self.tv.channel_up(), 0)
+        self.tv.mute()
+        assert self.tv.__muted == True
+        self.tv.mute()
+        assert self.tv.__muted == False
+
+    def test_channel_up():
         self.tv.power()
-        self.assertEqual(self.tv.channel_up(), 0)
-        self.assertEqual(self.tv.channel_up(), 0)
-        self.assertEqual(self.tv.channel_up(), 0)
-        self.assertEqual(self.tv.channel_up(), 0)
+        self.tv.channel_up()
+        assert self.tv.__channel == 1
+        self.tv.channel_up()
+        assert self.tv.__channel == 2
+        self.tv.channel_up()
+        assert self.tv.__channel == 3
+        self.tv.channel_up()
+        assert self.tv.__channel == 0
+        self.tv.power()
+        self.tv.channel_up()
+        assert self.tv.__channel == 0
+        self.tv.channel_up()
+        assert self.tv.__channel == 0
 
     def test_channel_down(self):
         self.tv.power()
-        self.assertEqual(self.tv.channel_down(), 3)
-        self.assertEqual(self.tv.channel_down(), 2)
-        self.assertEqual(self.tv.channel_down(), 1)
-        self.assertEqual(self.tv.channel_down(), 0)
+        self.tv.channel_down()
+        assert self.tv.__channel == 3
+        self.tv.channel_down()
+        assert self.tv.__channel == 2
+        self.tv.channel_down()
+        assert self.tv.__channel == 1
+        self.tv.channel_down()
+        assert self.tv.__channel == 0
         self.tv.power()
-        self.assertEqual(self.tv.channel_down(), 0)
-        self.assertEqual(self.tv.channel_down(), 0)
-        self.assertEqual(self.tv.channel_down(), 0)
-        self.assertEqual(self.tv.channel_down(), 0)
+        self.tv.channel_down()
+        assert self.tv.__channel == 0
+        self.tv.channel_down()
+        assert self.tv.__channel == 0
 
     def test_volume_up(self):
         self.tv.power()
         self.tv.mute()
-        self.assertEqual(self.tv.volume_up(), 1)
-        self.assertEqual(self.tv.volume_up(), 2)
-        self.assertEqual(self.tv.volume_up(), 2)
+        self.tv.volume_up()
+        assert self.tv.__volume == 2
+        self.tv.volume_up()
+        assert self.tv.__volume == 2
+        self.tv.volume_up()
+        assert self.tv.__volume == 2
         self.tv.power()
         self.tv.mute()
-        self.assertEqual(self.tv.volume_up(), 2)
-        self.assertEqual(self.tv.volume_up(), 2)
+        self.tv.volume_up()
+        assert self.tv.__volume == 2
+        self.tv.volume_up()
+        assert self.tv.__volume == 2
 
     def test_volume_down(self):
         self.tv.power()
         self.tv.mute()
-        self.assertEqual(self.tv.volume_down(), 0)
-        self.assertEqual(self.tv.volume_down(), 0)
-        self.assertEqual(self.tv.volume_down(), 0)
+        self.tv.volume_down()
+        assert self.tv.__volume == 1
+        self.tv.volume_down()
+        assert self.tv.__volume == 0
+        self.tv.volume_down()
+        assert self.tv.__volume == 0
         self.tv.power()
         self.tv.mute()
-        self.assertEqual(self.tv.volume_down(), 0)
-        self.assertEqual(self.tv.volume_down(), 0)
+        self.tv.volume_down()
+        assert self.tv.__volume == 0
+        self.tv.volume_down()
+        assert self.tv.__volume == 0
 
 
 
